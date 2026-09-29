@@ -59,7 +59,9 @@ main{flex:1;display:flex;flex-direction:column;padding:0 12px 12px;min-height:0}
 .gate h2{font:800 clamp(34px,7vw,72px)/.95 var(--head);margin:0 0 6px;color:var(--ink)}
 .gate p{margin:0 0 22px;color:var(--ink-dim);max-width:44ch;font-size:16px}
 .big{font:800 22px var(--head);letter-spacing:.04em;background:var(--ochre);color:var(--stage);border:0;border-radius:999px;padding:14px 34px;cursor:pointer}
-.big:focus-visible,.ctl button:focus-visible,select:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.cta{display:inline-block;margin-top:14px;font:800 20px var(--head);letter-spacing:.04em;background:var(--grass);color:#fff;text-decoration:none;border-radius:999px;padding:12px 26px}
+.cta:hover{filter:brightness(1.1)}
+.big:focus-visible,.cta:focus-visible,.ctl button:focus-visible,select:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
 
 .bar{height:5px;background:rgba(255,255,255,.12);position:relative}
 .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ochre);width:0;transition:width .3s}
@@ -165,8 +167,8 @@ const slides = [
   say:["The property owners and organisers can stop any rider, any bike, any section of track or any activity on the spot, if they think the behaviour, the equipment, the weather or the conditions are unsafe.","They can also withdraw your riding privileges for the weekend.","Their directions apply everywhere on the property, so if you're told to stop, you stop."], kind:"stop"},
  {tag:"Emergency", icon:"phone", h:"If something goes wrong", pts:["Stop riding near the incident","Protect the injured person from other bikes","Call triple zero. Address: 685 Eureeka Road, Golden Fleece","Keep access clear and send someone to meet the ambulance"],
   say:["If there's a serious incident, stop riding near it and protect the injured person from other bikes.","Call triple zero if it's needed. The address is six eight five Eureeka Road, Golden Fleece. It'll be displayed on site too, so know where it is.","Keep the access track clear for emergency vehicles, and send someone out to meet and direct them.","Adults, carry your phones where you can. Then follow the organisers' directions."]},
- {tag:"Done", icon:"tick", h:"Complete the acknowledgement, then ride", pts:["Finish the online acknowledgement","Get your gear on and check your bike","Look after each other and have a good weekend"],
-  say:["That's the briefing.","Complete the online acknowledgement, get your gear on, check your bike, and come and find us if anything on the property doesn't look right.","Look after each other, look after the kids, and have a great weekend."], kind:"ok"}
+ {tag:"Done", icon:"tick", h:"Complete the acknowledgement, then ride", pts:["Tap the button to open the online acknowledgement","Get your gear on and check your bike","Look after each other and have a good weekend"], link:{href:"https://forms.cloud.microsoft/r/uBjnAWJt37",label:"Complete the acknowledgement"},
+  say:["That's the briefing.","Tap the green button to complete the online acknowledgement, then get your gear on, check your bike, and come and find us if anything on the property doesn't look right.","Look after each other, look after the kids, and have a great weekend."], kind:"ok"}
 ];
 
 // ---------- Build ----------
@@ -176,7 +178,7 @@ slides.forEach((s,i)=>{
   d.className='slide'+(s.kind?' '+s.kind:'');
   d.setAttribute('aria-hidden','true');
   d.innerHTML=`<div class="tag${s.kind?' '+s.kind:''}"><span class="n">${i+1}</span>${s.tag}</div>
-  <div class="body"><div><h2>${s.h}</h2><ul>${s.pts.map(p=>`<li>${p}</li>`).join('')}</ul></div><div class="pic">${I[s.icon]}</div></div>
+  <div class="body"><div><h2>${s.h}</h2><ul>${s.pts.map(p=>`<li>${p}</li>`).join('')}</ul>${s.link?`<a class="cta" href="${s.link.href}" target="_blank" rel="noopener">${s.link.label} →</a>`:''}</div><div class="pic">${I[s.icon]}</div></div>
   <div class="cap" aria-live="polite"></div>`;
   wrap.appendChild(d);
 });
